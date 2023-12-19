@@ -11,27 +11,32 @@ public extension FeedbackManagerView {
 
     struct Configuration {
 
+        public var isModal: Bool
+
         public var recipients: [String]
         public var title: String
         public var sendButtonTitle: String
         public var cancelButtonTitle: String
 
         public init(
+            isModal: Bool = true,
             recipients: [String],
             title: String? = nil,
             sendButtonTitle: String? = nil,
             cancelButtonTitle: String? = nil
         ) {
 
+            self.isModal = isModal
+
             self.recipients = recipients
             
-            self.title = title ?? FeedbackManagerView.Strings.title
+            self.title = title ?? Strings.title
             
             self.sendButtonTitle = sendButtonTitle
-                ?? FeedbackManagerView.Strings.sendButtonTitle
+                ?? Strings.sendButtonTitle
             
             self.cancelButtonTitle = cancelButtonTitle
-                ?? FeedbackManagerView.Strings.cancelButtonTitle
+                ?? Strings.cancelButtonTitle
         }
     }
 }

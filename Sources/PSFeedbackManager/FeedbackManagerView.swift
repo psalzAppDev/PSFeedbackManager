@@ -58,7 +58,7 @@ public struct FeedbackManagerView: View {
 
                     VStack {
 
-                        if state == .edited {
+                        if configuration.isModal, state == .edited {
 
                             HStack {
                                 Spacer()
@@ -85,7 +85,9 @@ public struct FeedbackManagerView: View {
                             appInfoSection
                         }
                         .scrollDismissesKeyboard(.interactively)
-                        .interactiveDismissDisabled(state != .vanilla)
+                        .interactiveDismissDisabled(
+                            configuration.isModal && state != .vanilla
+                        )
                         .onChange(of: selectedPhotoItems) { selectedPhotoItems in
 
                             withAnimation {
@@ -116,7 +118,9 @@ public struct FeedbackManagerView: View {
                             MailView(
                                 data: $email,
                                 callback: { _ in
-                                    dismiss()
+                                    if configuration.isModal {
+                                        dismiss()
+                                    }
                                 }
                             )
                         }
@@ -144,9 +148,12 @@ public struct FeedbackManagerView: View {
                 .navigationTitle(configuration.title)
                 .navigationBarTitleDisplayMode(.large)
                 .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button(configuration.cancelButtonTitle) {
-                            dismiss()
+                    if configuration.isModal {
+
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button(configuration.cancelButtonTitle) {
+                                dismiss()
+                            }
                         }
                     }
 
@@ -244,32 +251,30 @@ extension FeedbackManagerView {
                     content: {
                         Group {
                             ForEach(0..<selectedAttachmentImages.count, id: \.self) { idx in
-                                ListCard(
-                                    content: {
-                                        Image(uiImage: selectedAttachmentImages[idx])
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(width: 100, height: 100)
-                                            .overlay(alignment: .bottomTrailing) {
-                                                Button(
-                                                    role: .destructive,
-                                                    action: {
-                                                        deleteAttachment(at: idx)
-                                                    },
-                                                    label: {
-                                                        Image(systemName: "trash")
-                                                    }
-                                                )
-                                                .font(.title2)
-                                                .padding(8)
-                                                .background(.thinMaterial)
-                                                .clipShape(Circle())
-                                                .padding(.bottom, 2)
-                                                .padding(.trailing, 2)
-                                            }
-                                    },
-                                    contextMenu: {}
-                                )
+
+                                ListCard {
+                                    Image(uiImage: selectedAttachmentImages[idx])
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 100, height: 100)
+                                        .overlay(alignment: .bottomTrailing) {
+                                            Button(
+                                                role: .destructive,
+                                                action: {
+                                                    deleteAttachment(at: idx)
+                                                },
+                                                label: {
+                                                    Image(systemName: "trash")
+                                                }
+                                            )
+                                            .font(.title2)
+                                            .padding(8)
+                                            .background(.thinMaterial)
+                                            .clipShape(Circle())
+                                            .padding(.bottom, 2)
+                                            .padding(.trailing, 2)
+                                        }
+                                }
                             }
                         }
                     }
@@ -306,7 +311,7 @@ extension FeedbackManagerView {
             HStack {
                 Text(Strings.deviceInfoDeviceTitle)
                 Spacer()
-                Text(email.deviceModel.marketingName)
+                Text(email.deviceModel)
                     .foregroundStyle(.secondary)
             }
 
@@ -469,16 +474,16 @@ extension FeedbackManagerView {
             switch self {
             
             case .question:
-                FeedbackManagerView.Strings.topicSelectionQuestion
+                Strings.topicSelectionQuestion
 
             case .request:
-                FeedbackManagerView.Strings.topicSelectionRequest
+                Strings.topicSelectionRequest
 
             case .bugReport:
-                FeedbackManagerView.Strings.topicSelectionBugReport
+                Strings.topicSelectionBugReport
 
             case .other:
-                FeedbackManagerView.Strings.topicSelectionOther
+                Strings.topicSelectionOther
             }
         }
     }
@@ -486,4 +491,10 @@ extension FeedbackManagerView {
 
 #Preview {
     FeedbackManagerView(configuration: .init(recipients: ["test@email.com"]))
+}
+
+#Preview {
+    FeedbackManagerView(
+        configuration: .init(isModal: false, recipients: ["test@email.com"])
+    )
 }

@@ -4,14 +4,37 @@
 //
 //  Created by Peter Salz on 19.12.23.
 //
-//  Originally created by Daniel Saidi on 2023-04-26.
-//  Copyright © 2023 Daniel Saidi. All rights reserved.
-//
 
 import SwiftUI
 
 /**
- This view can be used to add a horizontally scrolling shelf to a vertically scrolling list.
+ Adapted from SwiftUIKit.
+
+ Here is the Github [Link](https://github.com/danielsaidi/SwiftUIKit)
+
+ License:
+
+ MIT License
+
+ Copyright (c) 2020-2024 Daniel Saidi
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
  */
 struct ListShelfSection<Title: View, Content: View>: View {
 
@@ -93,32 +116,11 @@ struct ListShelfSectionStyle {
                 content: {
                     Group {
 
-                        ListCard(
-                            content: { Color.red },
-                            contextMenu: {
-                                Button("1") {}
-                                Button("2") {}
-                                Button("3") {}
-                            }
-                        )
+                        ListCard { Color.red }
 
-                        ListCard(
-                            content: { Color.green },
-                            contextMenu: {
-                                Button("1") {}
-                                Button("2") {}
-                                Button("3") {}
-                            }
-                        )
+                        ListCard { Color.green }
 
-                        ListCard(
-                            content: { Color.blue },
-                            contextMenu: {
-                                Button("1") {}
-                                Button("2") {}
-                                Button("3") {}
-                            }
-                        )
+                        ListCard { Color.blue }
                     }
                     .frame(width: 150, height: 150)
                 }

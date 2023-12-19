@@ -18,21 +18,21 @@ struct MailView: UIViewControllerRepresentable {
     private var dismiss
 
     @Binding
-    var data: FeedbackManagerView.EmailModel
+    var data: EmailModel
 
     let callback: MailViewCallback
 
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
 
         @Binding
-        var data: FeedbackManagerView.EmailModel
+        var data: EmailModel
 
         let callback: MailViewCallback
 
         let dismissAction: () -> Void
 
         init(
-            data: Binding<FeedbackManagerView.EmailModel>,
+            data: Binding<EmailModel>,
             callback: MailViewCallback,
             dismissAction: @escaping () -> Void
         ) {
