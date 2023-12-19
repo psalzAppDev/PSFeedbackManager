@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "psdeviice",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/psalzAppDev/PSDeviice.git",
+      "state" : {
+        "revision" : "b83b757288f0b7553fd2aceddfd592ea1c0fc3a6",
+        "version" : "2.3.0"
+      }
+    },
+    {
+      "identity" : "psluminous",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/psalzAppDev/PSLuminous.git",
+      "state" : {
+        "revision" : "3c02a7ec1a2f2b759d6281c768bc73589c652fb9",
+        "version" : "2.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}

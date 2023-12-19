@@ -1,0 +1,80 @@
+/* Ok action */
+"action.ok" = "OK";
+
+/* E-mail address */
+"alert.mail.message" = "U kunt mij bereiken op %@";
+
+/* No comment provided by engineer. */
+"alert.mail.title" = "Dit apparaat kan geen e-mails verzenden";
+
+/* App Info Build Title */
+"appInfo.build.title" = "Build";
+
+/* AppInfo Name Title */
+"appInfo.name.title" = "Naam";
+
+/* App Info Version Title */
+"appInfo.version.title" = "Versie";
+
+/* Attachments Attach Title */
+"attachments.attach.title" = "Foto bijvoegen";
+
+/* Attachments Attachment Title With Index */
+"attachments.attachment.titleWithIndex" = "Bijlage %d";
+
+/* Attachments Delete */
+"attachments.delete" = "Bijlage verwijderen";
+
+/* CancelButton Title */
+"cancelButton.title" = "Annuleren";
+
+/* DeviceInfo Device Title */
+"deviceInfo.device.title" = "Apparaat";
+
+/* DeviceInfo System Title */
+"deviceInfo.system.title" = "iOS";
+
+/* EditedNotification */
+"editedNotification" = "Bewerkt - Tik op \"Annuleren\" om te sluiten";
+
+/* Header App Info */
+"header.appInfo" = "App informatie";
+
+/* Header Attachments */
+"header.attachments" = "Bijlagen";
+
+/* Header Device Info */
+"header.deviceInfo" = "Apparaat info";
+
+/* Header Topic */
+"header.topic" = "Onderwerp";
+
+/* SendButton Title */
+"sendButton.title" = "Versturen";
+
+/* Title */
+"title" = "Neem contact met ons op";
+
+/* Topic Select Title */
+"topic.select.title" = "Onderwerp selecteren (tikken & vasthouden)";
+
+/* Topic Selection Bug Report */
+"topic.selection.bugReport" = "Bug report";
+
+/* Topic Selection Other */
+"topic.selection.other" = "Ander";
+
+/* Topic Selection Question */
+"topic.selection.question" = "Vraag";
+
+/* Topic Selection Request */
+"topic.selection.request" = "Verzoek";
+
+/* Topic TextView Placeholder */
+"topic.textView.placeholder" = "Omschrijf hier uw vraag.";
+
+/* Topic TextView Placeholder With Selection */
+"topic.textView.placeholder.withSelection" = "Beschrijf hier uw %@.";
+
+
+

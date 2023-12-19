@@ -1,0 +1,77 @@
+/* Ok action */
+"action.ok" = "OK";
+
+/* E-mail address */
+"alert.mail.message" = "Вы можете связаться со мной по адресу %@";
+
+/* No comment provided by engineer. */
+"alert.mail.title" = "Это устройство не может отправлять электронные письма";
+
+/* App Info Build Title */
+"appInfo.build.title" = "Build";
+
+/* AppInfo Name Title */
+"appInfo.name.title" = "Имя";
+
+/* App Info Version Title */
+"appInfo.version.title" = "Версия";
+
+/* Attachments Attach Title */
+"attachments.attach.title" = "Прикрепить фото";
+
+/* Attachments Attachment Title With Index */
+"attachments.attachment.titleWithIndex" = "Вложение %d";
+
+/* Attachments Delete */
+"attachments.delete" = "Удалить вложение";
+
+/* CancelButton Title */
+"cancelButton.title" = "Отмена";
+
+/* DeviceInfo Device Title */
+"deviceInfo.device.title" = "Устройство";
+
+/* DeviceInfo System Title */
+"deviceInfo.system.title" = "iOS";
+
+/* EditedNotification */
+"editedNotification" = "Отредактировано - нажмите \"Отмена\", чтобы закрыть";
+
+/* Header App Info */
+"header.appInfo" = "Информация о приложении";
+
+/* Header Attachments */
+"header.attachments" = "Вложения";
+
+/* Header Device Info */
+"header.deviceInfo" = "Информация об устройстве";
+
+/* Header Topic */
+"header.topic" = "Тема";
+
+/* SendButton Title */
+"sendButton.title" = "послать";
+
+/* Title */
+"title" = "Свяжитесь с нами";
+
+/* Topic Select Title */
+"topic.select.title" = "Выберите тему (нажмите и удерживайте)";
+
+/* Topic Selection Bug Report */
+"topic.selection.bugReport" = "Сообщение об ошибке";
+
+/* Topic Selection Other */
+"topic.selection.other" = "Другой";
+
+/* Topic Selection Question */
+"topic.selection.question" = "Вопрос";
+
+/* Topic Selection Request */
+"topic.selection.request" = "Запрос";
+
+/* Topic TextView Placeholder */
+"topic.textView.placeholder" = "Опишите здесь свой вопрос.";
+
+/* Topic TextView Placeholder With Selection */
+"topic.textView.placeholder.withSelection" = "Опишите здесь свой %@.";

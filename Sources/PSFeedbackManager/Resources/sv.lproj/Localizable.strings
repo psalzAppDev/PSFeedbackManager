@@ -1,0 +1,77 @@
+/* Ok action */
+"action.ok" = "OK";
+
+/* E-mail address */
+"alert.mail.message" = "Du når mig på %@";
+
+/* No comment provided by engineer. */
+"alert.mail.title" = "Den här enheten kan inte skicka e -postmeddelanden";
+
+/* App Info Build Title */
+"appInfo.build.title" = "Build";
+
+/* AppInfo Name Title */
+"appInfo.name.title" = "Namn";
+
+/* App Info Version Title */
+"appInfo.version.title" = "Version";
+
+/* Attachments Attach Title */
+"attachments.attach.title" = "Bifoga foto";
+
+/* Attachments Attachment Title With Index */
+"attachments.attachment.titleWithIndex" = "Anknytning %d";
+
+/* Attachments Delete */
+"attachments.delete" = "Ta bort bilaga";
+
+/* CancelButton Title */
+"cancelButton.title" = "Avbryt";
+
+/* DeviceInfo Device Title */
+"deviceInfo.device.title" = "Enhet";
+
+/* DeviceInfo System Title */
+"deviceInfo.system.title" = "iOS";
+
+/* EditedNotification */
+"editedNotification" = "Redigerat - Tryck på \"Avbryt\" för att avvisa";
+
+/* Header App Info */
+"header.appInfo" = "App Info";
+
+/* Header Attachments */
+"header.attachments" = "Bilagor";
+
+/* Header Device Info */
+"header.deviceInfo" = "Enhetsinformation";
+
+/* Header Topic */
+"header.topic" = "Ämne";
+
+/* SendButton Title */
+"sendButton.title" = "Skicka";
+
+/* Title */
+"title" = "Kontakta oss";
+
+/* Topic Select Title */
+"topic.select.title" = "Välj ämne (tryck och håll kvar)";
+
+/* Topic Selection Bug Report */
+"topic.selection.bugReport" = "Buggrapport";
+
+/* Topic Selection Other */
+"topic.selection.other" = "Övrig";
+
+/* Topic Selection Question */
+"topic.selection.question" = "Fråga";
+
+/* Topic Selection Request */
+"topic.selection.request" = "Begäran";
+
+/* Topic TextView Placeholder */
+"topic.textView.placeholder" = "Beskriv din fråga här.";
+
+/* Topic TextView Placeholder With Selection */
+"topic.textView.placeholder.withSelection" = "Beskriv din %@ här.";

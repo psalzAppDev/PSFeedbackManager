@@ -1,0 +1,80 @@
+/* Ok action */
+"action.ok" = "OK";
+
+/* E-mail address */
+"alert.mail.message" = "Puoi contattarmi a %@";
+
+/* No comment provided by engineer. */
+"alert.mail.title" = "Questo dispositivo non può inviare email";
+
+/* App Info Build Title */
+"appInfo.build.title" = "Build";
+
+/* AppInfo Name Title */
+"appInfo.name.title" = "Nome";
+
+/* App Info Version Title */
+"appInfo.version.title" = "Versione";
+
+/* Attachments Attach Title */
+"attachments.attach.title" = "Allega foto";
+
+/* Attachments Attachment Title With Index */
+"attachments.attachment.titleWithIndex" = "Allegato %d";
+
+/* Attachments Delete */
+"attachments.delete" = "Elimina allegato";
+
+/* CancelButton Title */
+"cancelButton.title" = "Annulla";
+
+/* DeviceInfo Device Title */
+"deviceInfo.device.title" = "Dispositivo";
+
+/* DeviceInfo System Title */
+"deviceInfo.system.title" = "iOS";
+
+/* EditedNotification */
+"editedNotification" = "Modificato - Tocca \"Annulla\" per ignorare";
+
+/* Header App Info */
+"header.appInfo" = "Informazioni sull'app";
+
+/* Header Attachments */
+"header.attachments" = "Allegati";
+
+/* Header Device Info */
+"header.deviceInfo" = "Informazioni sul dispositivo";
+
+/* Header Topic */
+"header.topic" = "Argomento";
+
+/* SendButton Title */
+"sendButton.title" = "Spedire";
+
+/* Title */
+"title" = "Contattaci";
+
+/* Topic Select Title */
+"topic.select.title" = "Seleziona argomento (tocca e tieni premuto)";
+
+/* Topic Selection Bug Report */
+"topic.selection.bugReport" = "Riportare un errore";
+
+/* Topic Selection Other */
+"topic.selection.other" = "Altro";
+
+/* Topic Selection Question */
+"topic.selection.question" = "Domanda";
+
+/* Topic Selection Request */
+"topic.selection.request" = "Richiesta";
+
+/* Topic TextView Placeholder */
+"topic.textView.placeholder" = "Descrivi qui la tua domanda.";
+
+/* Topic TextView Placeholder With Selection */
+"topic.textView.placeholder.withSelection" = "Descrivi qui il tuo %@.";
+
+
+
