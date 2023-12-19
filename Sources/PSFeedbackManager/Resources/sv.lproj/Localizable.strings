@@ -56,7 +56,7 @@
 "title" = "Kontakta oss";
 
 /* Topic Select Title */
-"topic.select.title" = "Välj ämne (tryck och håll kvar)";
+"topic.select.title" = "Välj ämne";
 
 /* Topic Selection Bug Report */
 "topic.selection.bugReport" = "Buggrapport";

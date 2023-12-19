@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension FeedbackManager {
+extension FeedbackManagerView {
 
     struct Strings {
 
@@ -77,7 +77,7 @@ extension FeedbackManager {
         static let topicSelectTitle = NSLocalizedString(
             "topic.select.title",
             bundle: .module,
-            value: "Select topic (tap & hold)",
+            value: "Select topic",
             comment: "Topic Select Title"
         )
 

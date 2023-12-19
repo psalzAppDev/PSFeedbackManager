@@ -56,7 +56,7 @@
 "title" = "Contate-Nos";
 
 /* Topic Select Title */
-"topic.select.title" = "Selecione o tópico (toque e segure)";
+"topic.select.title" = "Selecione o tópico";
 
 /* Topic Selection Bug Report */
 "topic.selection.bugReport" = "Relatório de erro";

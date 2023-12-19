@@ -56,7 +56,7 @@
 "title" = "Neem contact met ons op";
 
 /* Topic Select Title */
-"topic.select.title" = "Onderwerp selecteren (tikken & vasthouden)";
+"topic.select.title" = "Onderwerp selecteren";
 
 /* Topic Selection Bug Report */
 "topic.selection.bugReport" = "Bug report";

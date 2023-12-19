@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public extension FeedbackManager {
+public extension FeedbackManagerView {
 
     struct Configuration {
 
@@ -24,9 +24,14 @@ public extension FeedbackManager {
         ) {
 
             self.recipients = recipients
-            self.title = title ?? Strings.title
-            self.sendButtonTitle = sendButtonTitle ?? Strings.sendButtonTitle
-            self.cancelButtonTitle = cancelButtonTitle ?? Strings.cancelButtonTitle
+            
+            self.title = title ?? FeedbackManagerView.Strings.title
+            
+            self.sendButtonTitle = sendButtonTitle
+                ?? FeedbackManagerView.Strings.sendButtonTitle
+            
+            self.cancelButtonTitle = cancelButtonTitle
+                ?? FeedbackManagerView.Strings.cancelButtonTitle
         }
     }
 }

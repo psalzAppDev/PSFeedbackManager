@@ -56,7 +56,7 @@
 "title" = "Свяжитесь с нами";
 
 /* Topic Select Title */
-"topic.select.title" = "Выберите тему (нажмите и удерживайте)";
+"topic.select.title" = "Выберите тему";
 
 /* Topic Selection Bug Report */
 "topic.selection.bugReport" = "Сообщение об ошибке";

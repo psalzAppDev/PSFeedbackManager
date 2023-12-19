@@ -56,7 +56,7 @@
 "title" = "Contacta con nosotros";
 
 /* Topic Select Title */
-"topic.select.title" = "Seleccionar tema (mantener pulsado)";
+"topic.select.title" = "Seleccionar tema";
 
 /* Topic Selection Bug Report */
 "topic.selection.bugReport" = "Informe de error";
