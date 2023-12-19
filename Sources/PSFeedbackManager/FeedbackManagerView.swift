@@ -169,7 +169,7 @@ extension FeedbackManagerView {
 
             Picker(Strings.topicSelectTitle, selection: $selectedTopic) {
                 ForEach(Topic.allCases) {
-                    Text($0.name)
+                    Label($0.name, systemImage: $0.symbolName)
                         .tag($0)
                 }
             }
@@ -217,9 +217,7 @@ extension FeedbackManagerView {
                             Button(
                                 action: { isTextFieldFocused = false },
                                 label: {
-                                    // TODO: TODO: Localization
-                                    Text("Done")
-                                        .bold()
+                                    Image(systemName: "keyboard.chevron.compact.down.fill")
                                 }
                             )
                             .foregroundStyle(Color.accentColor)
