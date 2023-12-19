@@ -17,7 +17,7 @@ public extension FeedbackManagerView {
         public var cancelButtonTitle: String
 
         public init(
-            recipients: [String] = [],
+            recipients: [String],
             title: String? = nil,
             sendButtonTitle: String? = nil,
             cancelButtonTitle: String? = nil

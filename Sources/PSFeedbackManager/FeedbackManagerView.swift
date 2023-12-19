@@ -12,7 +12,7 @@ import UIKit
 
 public struct FeedbackManagerView: View {
 
-    public init(configuration: Configuration = .init()) {
+    public init(configuration: Configuration) {
         self.configuration = configuration
     }
 
@@ -485,5 +485,5 @@ extension FeedbackManagerView {
 }
 
 #Preview {
-    FeedbackManagerView()
+    FeedbackManagerView(configuration: .init(recipients: ["test@email.com"]))
 }
