@@ -117,9 +117,26 @@ public struct FeedbackManagerView: View {
                         .sheet(isPresented: $showMailView) {
                             MailView(
                                 data: $email,
-                                callback: { _ in
-                                    if configuration.isModal {
-                                        dismiss()
+                                callback: { result in
+
+                                    guard configuration.isModal else {
+                                        return
+                                    }
+
+                                    switch result {
+
+                                    case .success(let composeResult):
+                                        switch composeResult {
+
+                                        case .sent:
+                                            dismiss()
+
+                                        default:
+                                            break
+                                        }
+
+                                    case .failure:
+                                        break
                                     }
                                 }
                             )
@@ -427,6 +444,8 @@ extension FeedbackManagerView {
 
             return
         }
+
+        email.body = body
 
         showMailView = true
     }
