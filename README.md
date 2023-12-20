@@ -103,6 +103,19 @@ struct ContentView: View {
 }
 ```
 
+Localization is available for the following languages:
+- English
+- German
+- Spanish
+- French
+- Italian
+- Dutch
+- Portuguese
+- Russian
+- Swedish
+
+Any help improving the localizations is warmly appreciated!
+
 ## License
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
