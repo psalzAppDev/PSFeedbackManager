@@ -13,8 +13,6 @@ It works on iOS, iPadOS, macOS (Designed for iPad) and macCatalyst with version 
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Notes](#notes)
-* [Contribute](#contribute)
 * [License](#license)
 
 ## Requirements
