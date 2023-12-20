@@ -8,8 +8,10 @@
 import SwiftUI
 import PhotosUI
 import MessageUI
-import UIKit
 
+/**
+ TODO
+ */
 public struct FeedbackManagerView: View {
 
     public init(configuration: Configuration) {
@@ -24,15 +26,19 @@ public struct FeedbackManagerView: View {
     @FocusState
     private var isTextFieldFocused: Bool
 
+    /// Whether the user already started creating a report  (`.edited`) or not (`.vanilla`).
     @State
-    var state: EditState = .vanilla
+    private var state: EditState = .vanilla
 
+    /// The text entered by the user.
     @State
     private var text: String = ""
 
+    /// The topic selected by the user.
     @State
     private var selectedTopic: Topic = .question
 
+    /// Internal representation of selected attachment images.
     @State
     private var selectedPhotoItems: [PhotosPickerItem] = []
 
@@ -52,12 +58,17 @@ public struct FeedbackManagerView: View {
         
         NavigationStack {
 
+            // This is necessary to show the dismiss note with the same background
+            // color as the form.
             Color(.systemGroupedBackground)
                 .ignoresSafeArea()
                 .overlay {
 
                     VStack {
 
+                        // If we're in modal (sheet) state and the contents were
+                        // edited, display a note that the view can only be
+                        // dismissed by tapping the cancel button.
                         if configuration.isModal, state == .edited {
 
                             HStack {
@@ -72,28 +83,36 @@ public struct FeedbackManagerView: View {
 
                         Form {
 
-                            // Section for "Topic"
+                            // Section with topic selection and text editor.
                             topicSection
-
-                            // Section for "Attachments"
+                            
+                            // Section for attachment images.
                             attachmentsSection
-
-                            // Section for "Device Info"
+ 
+                            // Section for device info (model name and OS version).
                             deviceInfoSection
-
-                            // Section for "App Info"
+                            
+                            // Section for app info (Name, version, build).
                             appInfoSection
                         }
+                        // Allow the user to dismiss the keyboard by swiping.
                         .scrollDismissesKeyboard(.interactively)
+                        // Don't allow drag down to dismiss if we're in modal
+                        // state and the contents have been edited.
                         .interactiveDismissDisabled(
-                            configuration.isModal && state != .vanilla
+                            configuration.isModal && state == .edited
                         )
                         .onChange(of: selectedPhotoItems) { selectedPhotoItems in
 
+                            // Selecting a photo as attachment means that the
+                            // report has been edited and therefore cannot be
+                            // dismissed by dragging down.
                             withAnimation {
                                 state = .edited
                             }
 
+                            // Retrieve the UIImages from the selected photo
+                            // items and store them.
                             Task {
                                 selectedAttachmentImages.removeAll()
 
@@ -110,6 +129,9 @@ public struct FeedbackManagerView: View {
                             }
                         }
                         .onChange(of: text) { _ in
+
+                            // Editing text means that the report has been edited
+                            // and therefore cannot be dismissed by dragging down.
                             withAnimation {
                                 state = .edited
                             }
@@ -119,6 +141,8 @@ public struct FeedbackManagerView: View {
                                 data: $email,
                                 callback: { result in
 
+                                    // Can't dismiss the view if not shown
+                                    // as a sheet.
                                     guard configuration.isModal else {
                                         return
                                     }
@@ -129,6 +153,8 @@ public struct FeedbackManagerView: View {
                                         switch composeResult {
 
                                         case .sent:
+                                            // If the email was sent successfully,
+                                            // dismiss the feedback manager,
                                             dismiss()
 
                                         default:
@@ -191,6 +217,7 @@ extension FeedbackManagerView {
         
         Section(Strings.headerTopic) {
 
+            // Menu picker for the selected topic.
             Picker(Strings.topicSelectTitle, selection: $selectedTopic) {
                 ForEach(Topic.allCases) {
                     Label($0.name, systemImage: $0.symbolName)
@@ -201,16 +228,18 @@ extension FeedbackManagerView {
             VStack(alignment: .leading) {
 
                 HStack {
+
                     Text(
                         String.localizedStringWithFormat(
                             Strings.textViewPlaceholderWithSelection,
-                            selectedTopic.name.lowercased()
+                            selectedTopic.name
                         )
                     )
                     .foregroundStyle(.secondary)
 
                     Spacer()
 
+                    // Button to clear the text editor content.
                     Button(
                         action: {
                             text = ""
@@ -224,7 +253,6 @@ extension FeedbackManagerView {
                 }
 
                 TextEditor(text: $text)
-                    .lineLimit(10, reservesSpace: true)
                     .padding(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
@@ -233,7 +261,7 @@ extension FeedbackManagerView {
                     .frame(minHeight: 100)
                     .focused($isTextFieldFocused)
                     .toolbar {
-                        // Done button on top of the keyboard.
+                        // Dismiss keyboard button on top of the keyboard.
                         ToolbarItemGroup(placement: .keyboard) {
 
                             Spacer()
@@ -263,39 +291,35 @@ extension FeedbackManagerView {
 
             if !selectedAttachmentImages.isEmpty {
 
-                ListShelfSection(
-                    title: { EmptyView() },
-                    content: {
-                        Group {
-                            ForEach(0..<selectedAttachmentImages.count, id: \.self) { idx in
+                AttachmentView {
+                    ForEach(0..<selectedAttachmentImages.count, id: \.self) { idx in
 
-                                ListCard {
-                                    Image(uiImage: selectedAttachmentImages[idx])
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 100, height: 100)
-                                        .overlay(alignment: .bottomTrailing) {
-                                            Button(
-                                                role: .destructive,
-                                                action: {
-                                                    deleteAttachment(at: idx)
-                                                },
-                                                label: {
-                                                    Image(systemName: "trash")
-                                                }
-                                            )
-                                            .font(.title2)
-                                            .padding(8)
-                                            .background(.thinMaterial)
-                                            .clipShape(Circle())
-                                            .padding(.bottom, 2)
-                                            .padding(.trailing, 2)
+                        Card {
+                            Image(uiImage: selectedAttachmentImages[idx])
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .overlay(alignment: .bottomTrailing) {
+                                    // Button to delete the image.
+                                    Button(
+                                        role: .destructive,
+                                        action: {
+                                            deleteAttachment(at: idx)
+                                        },
+                                        label: {
+                                            Image(systemName: "trash")
                                         }
+                                    )
+                                    .font(.title2)
+                                    .padding(8)
+                                    .background(.thinMaterial)
+                                    .clipShape(Circle())
+                                    .padding(.bottom, 2)
+                                    .padding(.trailing, 2)
                                 }
-                            }
                         }
                     }
-                )
+                }
             }
 
             PhotosPicker(
@@ -381,17 +405,19 @@ extension FeedbackManagerView {
 
     private func sendEmail() {
         
+        // Create attachments from the selected images.
         var idx = 0
         email.attachments = selectedAttachmentImages.map {
 
             idx += 1
 
             return AttachmentData(
-                data: $0.jpegData(compressionQuality: 0.8)!,
+                data: $0.jpegData(compressionQuality: 1.0)!,
                 mimeType: "image/jpeg",
                 fileName: "attachment\(idx).jpeg"
             )
         }
+
         email.subject = "\(email.appName) - \(selectedTopic.name)"
         email.body = text
         email.recipients = configuration.recipients
@@ -418,6 +444,9 @@ extension FeedbackManagerView {
 
         let body = "\(email.body)\n\n" + info
 
+        // If sending mail via MFMailComposeViewController is not possible,
+        // at least try to open the standard mail app.
+        // Note that the image attachments are not sent with this method.
         guard MailView.canSendMail else {
 
             if let subject = email.subject.addingPercentEncoding(
@@ -439,14 +468,18 @@ extension FeedbackManagerView {
                 )
 
             } else {
+                // If opening the standard mail app also fails, display an error
+                // explaining that no emails can be sent from this device.
                 showMailErrorAlert = true
             }
 
             return
         }
 
+        // Update the email's body with the appended device and app info.
         email.body = body
 
+        // Show the MFMailComposeViewController view.
         showMailView = true
     }
 }
@@ -460,60 +493,14 @@ extension FeedbackManagerView {
         case vanilla
         case edited
     }
-
-    enum Topic: CaseIterable, Identifiable {
-
-        var id: String { name }
-
-        case question
-        case request
-        case bugReport
-        case other
-
-        var symbolName: String {
-
-            switch self {
-            
-            case .question:
-                "questionmark.circle.fill"
-
-            case .request:
-                "info.circle.fill"
-
-            case .bugReport:
-                "ant.circle.fill"
-
-            case .other:
-                "ellipsis.circle.fill"
-            }
-        }
-
-        var name: String {
-
-            switch self {
-            
-            case .question:
-                Strings.topicSelectionQuestion
-
-            case .request:
-                Strings.topicSelectionRequest
-
-            case .bugReport:
-                Strings.topicSelectionBugReport
-
-            case .other:
-                Strings.topicSelectionOther
-            }
-        }
-    }
 }
 
 #Preview {
-    FeedbackManagerView(configuration: .init(recipients: ["test@email.com"]))
+    FeedbackManagerView(configuration: .init(recipients: ["email@test.com"]))
 }
 
 #Preview {
     FeedbackManagerView(
-        configuration: .init(isModal: false, recipients: ["test@email.com"])
+        configuration: .init(isModal: false, recipients: ["email@test.com"])
     )
 }

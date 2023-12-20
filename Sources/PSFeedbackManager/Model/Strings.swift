@@ -1,5 +1,5 @@
 //
-//  FeedbackManager+Strings.swift
+//  Strings.swift
 //  PSFeedbackManager
 //
 //  Created by Peter Salz on 19.12.23.

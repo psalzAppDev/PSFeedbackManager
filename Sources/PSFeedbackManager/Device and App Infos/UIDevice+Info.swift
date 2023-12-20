@@ -28,8 +28,4 @@ extension UIDevice {
 
         return identifier
     }()
-
-    static let systemVersionString: String = {
-        SystemVersion(withVersion: UIDevice().systemVersion)?.stringValue ?? ""
-    }()
 }

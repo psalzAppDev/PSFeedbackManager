@@ -18,6 +18,18 @@ public extension FeedbackManagerView {
         public var sendButtonTitle: String
         public var cancelButtonTitle: String
 
+        /**
+         The configuration for `FeedbackManagerView`.
+
+         Providing at least one recipient email address is mandatory.
+
+         - Parameters:
+            - isModal: Whether the view is shown modally, i.e. as a sheet. Default is `true`.
+            - recipients: The list of recipient email addresses.
+            - title: Optional custom title of the view. If `nil`, the standard localized title will be shown.
+            - sendButtonTitle: Optional custom title for the send button. If `nil`, the standard localized title will be shown.
+            - cancelButtonTitle: Optional custom title for the cancel button. If `nil`, the standard localized title will be shown.
+         */
         public init(
             isModal: Bool = true,
             recipients: [String],

@@ -1,5 +1,5 @@
 //
-//  FeedbackManager+EmailModel.swift
+//  EmailModel.swift
 //  PSFeedbackManager
 //
 //  Created by Peter Salz on 19.12.23.
@@ -15,7 +15,7 @@ struct EmailModel {
     var recipients: [String] = []
 
     let deviceModel = UIDevice.modelName
-    let deviceOS = UIDevice.systemVersionString
+    let deviceOS = UIDevice().systemVersion
 
     let appName = Application.name
     let appVersion = Application.version

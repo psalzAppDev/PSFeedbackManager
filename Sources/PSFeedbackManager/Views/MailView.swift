@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
-import UIKit
 import MessageUI
 
 typealias MailViewCallback = ((Result<MFMailComposeResult, Error>) -> Void)?
 
-/// [Source](https://swiftuirecipes.com/blog/send-mail-in-swiftui)
+/**
+ Wraps the `MFMailComposeViewController`in a SwiftUI view.
+
+ [Source](https://swiftuirecipes.com/blog/send-mail-in-swiftui)
+ */
 struct MailView: UIViewControllerRepresentable {
 
     @Environment(\.dismiss)
