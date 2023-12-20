@@ -260,21 +260,11 @@ extension FeedbackManagerView {
                     )
                     .frame(minHeight: 100)
                     .focused($isTextFieldFocused)
-                    .toolbar {
-                        // Dismiss keyboard button on top of the keyboard.
-                        ToolbarItemGroup(placement: .keyboard) {
-
-                            Spacer()
-
-                            Button(
-                                action: { isTextFieldFocused = false },
-                                label: {
-                                    Image(systemName: "keyboard.chevron.compact.down.fill")
-                                }
-                            )
-                            .foregroundStyle(Color.accentColor)
-                        }
+                    #if !targetEnvironment(macCatalyst)
+                    .keyboardDoneButton {
+                        isTextFieldFocused = false
                     }
+                    #endif
             }
         }
     }
