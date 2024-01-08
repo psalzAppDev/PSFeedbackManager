@@ -19,7 +19,7 @@ struct Strings {
     static let alertMailUnavailableMessageFormat = NSLocalizedString(
         "alert.mail.message",
         bundle: .module,
-        value: "You can reach me at %@",
+        value: "You can reach us at %@",
         comment: "E-mail address"
     )
 
@@ -173,7 +173,7 @@ struct Strings {
     static let headerAttachments = NSLocalizedString(
         "header.attachments",
         bundle: .module,
-        value: "Attchments",
+        value: "Attachments",
         comment: "Header Attachments"
     )
 

@@ -55,156 +55,153 @@ public struct FeedbackManagerView: View {
     private var email = EmailModel()
 
     public var body: some View {
-        
-        NavigationStack {
 
-            // This is necessary to show the dismiss note with the same background
-            // color as the form.
-            Color(.systemGroupedBackground)
-                .ignoresSafeArea()
-                .overlay {
+        // This is necessary to show the dismiss note with the same background
+        // color as the form.
+        Color(.systemGroupedBackground)
+            .ignoresSafeArea()
+            .overlay {
 
-                    VStack {
+                VStack {
 
-                        // If we're in modal (sheet) state and the contents were
-                        // edited, display a note that the view can only be
-                        // dismissed by tapping the cancel button.
-                        if configuration.isModal, state == .edited {
+                    // If we're in modal (sheet) state and the contents were
+                    // edited, display a note that the view can only be
+                    // dismissed by tapping the cancel button.
+                    if configuration.isModal, state == .edited {
 
-                            HStack {
-                                Spacer()
-                                Text(Strings.editedNotification)
-                                Spacer()
-                            }
-                            .foregroundStyle(.secondary)
-                            .padding()
-                            .background(.thickMaterial)
+                        HStack {
+                            Spacer()
+                            Text(Strings.editedNotification)
+                            Spacer()
+                        }
+                        .foregroundStyle(.secondary)
+                        .padding()
+                        .background(.thickMaterial)
+                    }
+
+                    Form {
+
+                        // Section with topic selection and text editor.
+                        topicSection
+
+                        // Section for attachment images.
+                        attachmentsSection
+
+                        // Section for device info (model name and OS version).
+                        deviceInfoSection
+
+                        // Section for app info (Name, version, build).
+                        appInfoSection
+                    }
+                    // Allow the user to dismiss the keyboard by swiping.
+                    .scrollDismissesKeyboard(.interactively)
+                    // Don't allow drag down to dismiss if we're in modal
+                    // state and the contents have been edited.
+                    .interactiveDismissDisabled(
+                        configuration.isModal && state == .edited
+                    )
+                    .onChange(of: selectedPhotoItems) { selectedPhotoItems in
+
+                        // Selecting a photo as attachment means that the
+                        // report has been edited and therefore cannot be
+                        // dismissed by dragging down.
+                        withAnimation {
+                            state = .edited
                         }
 
-                        Form {
+                        // Retrieve the UIImages from the selected photo
+                        // items and store them.
+                        Task {
+                            selectedAttachmentImages.removeAll()
 
-                            // Section with topic selection and text editor.
-                            topicSection
-                            
-                            // Section for attachment images.
-                            attachmentsSection
- 
-                            // Section for device info (model name and OS version).
-                            deviceInfoSection
-                            
-                            // Section for app info (Name, version, build).
-                            appInfoSection
-                        }
-                        // Allow the user to dismiss the keyboard by swiping.
-                        .scrollDismissesKeyboard(.interactively)
-                        // Don't allow drag down to dismiss if we're in modal
-                        // state and the contents have been edited.
-                        .interactiveDismissDisabled(
-                            configuration.isModal && state == .edited
-                        )
-                        .onChange(of: selectedPhotoItems) { selectedPhotoItems in
+                            for item in selectedPhotoItems {
 
-                            // Selecting a photo as attachment means that the
-                            // report has been edited and therefore cannot be
-                            // dismissed by dragging down.
-                            withAnimation {
-                                state = .edited
-                            }
+                                if let imageData = try? await item.loadTransferable(type: Data.self),
+                                   let image = UIImage(data: imageData) {
 
-                            // Retrieve the UIImages from the selected photo
-                            // items and store them.
-                            Task {
-                                selectedAttachmentImages.removeAll()
-
-                                for item in selectedPhotoItems {
-
-                                    if let imageData = try? await item.loadTransferable(type: Data.self),
-                                       let image = UIImage(data: imageData) {
-
-                                        withAnimation {
-                                            selectedAttachmentImages.append(image)
-                                        }
+                                    withAnimation {
+                                        selectedAttachmentImages.append(image)
                                     }
                                 }
                             }
                         }
-                        .onChange(of: text) { _ in
+                    }
+                    .onChange(of: text) { _ in
 
-                            // Editing text means that the report has been edited
-                            // and therefore cannot be dismissed by dragging down.
-                            withAnimation {
-                                state = .edited
-                            }
+                        // Editing text means that the report has been edited
+                        // and therefore cannot be dismissed by dragging down.
+                        withAnimation {
+                            state = .edited
                         }
-                        .sheet(isPresented: $showMailView) {
-                            MailView(
-                                data: $email,
-                                callback: { result in
+                    }
+                    .sheet(isPresented: $showMailView) {
+                        MailView(
+                            data: $email,
+                            callback: { result in
 
-                                    // Can't dismiss the view if not shown
-                                    // as a sheet.
-                                    guard configuration.isModal else {
-                                        return
-                                    }
+                                // Can't dismiss the view if not shown
+                                // as a sheet.
+                                guard configuration.isModal else {
+                                    return
+                                }
 
-                                    switch result {
+                                switch result {
 
-                                    case .success(let composeResult):
-                                        switch composeResult {
+                                case .success(let composeResult):
+                                    switch composeResult {
 
-                                        case .sent:
-                                            // If the email was sent successfully,
-                                            // dismiss the feedback manager,
-                                            dismiss()
+                                    case .sent:
+                                        // If the email was sent successfully,
+                                        // dismiss the feedback manager,
+                                        dismiss()
 
-                                        default:
-                                            break
-                                        }
-
-                                    case .failure:
+                                    default:
                                         break
                                     }
+
+                                case .failure:
+                                    break
                                 }
-                            )
-                        }
-                        .alert(
-                            Strings.alertMailUnavailableTitle,
-                            isPresented: $showMailErrorAlert,
-                            actions: {
-                                Button(
-                                    Strings.okAction,
-                                    role: .cancel,
-                                    action: {}
-                                )
-                            },
-                            message: {
-                                Text(
-                                    String.localizedStringWithFormat(
-                                        Strings.alertMailUnavailableMessageFormat,
-                                        configuration.recipients.first ?? ""
-                                    )
-                                )
                             }
                         )
                     }
+                    .alert(
+                        Strings.alertMailUnavailableTitle,
+                        isPresented: $showMailErrorAlert,
+                        actions: {
+                            Button(
+                                Strings.okAction,
+                                role: .cancel,
+                                action: {}
+                            )
+                        },
+                        message: {
+                            Text(
+                                String.localizedStringWithFormat(
+                                    Strings.alertMailUnavailableMessageFormat,
+                                    configuration.recipients.first ?? ""
+                                )
+                            )
+                        }
+                    )
                 }
-                .navigationTitle(configuration.title)
-                .navigationBarTitleDisplayMode(.large)
-                .toolbar {
-                    if configuration.isModal {
+            }
+            .navigationTitle(configuration.title)
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                if configuration.isModal {
 
-                        ToolbarItem(placement: .topBarLeading) {
-                            Button(configuration.cancelButtonTitle) {
-                                dismiss()
-                            }
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(configuration.cancelButtonTitle) {
+                            dismiss()
                         }
                     }
-
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(configuration.sendButtonTitle, action: sendEmail)
-                    }
                 }
-        }
+
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(configuration.sendButtonTitle, action: sendEmail)
+                }
+            }
     }
 }
 
@@ -486,11 +483,17 @@ extension FeedbackManagerView {
 }
 
 #Preview {
-    FeedbackManagerView(configuration: .init(recipients: ["email@test.com"]))
+
+    NavigationStack {
+        FeedbackManagerView(configuration: .init(recipients: ["email@test.com"]))
+    }
 }
 
 #Preview {
-    FeedbackManagerView(
-        configuration: .init(isModal: false, recipients: ["email@test.com"])
-    )
+
+    NavigationStack {
+        FeedbackManagerView(
+            configuration: .init(isModal: false, recipients: ["email@test.com"])
+        )
+    }
 }

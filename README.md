@@ -95,7 +95,9 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.large)
         }
         .sheet(isPresented: $showFeedbackManager) {
-            FeedbackManagerView(configuration: .init(recipients: recipients))
+            NavigationStack {
+                FeedbackManagerView(configuration: .init(recipients: recipients))
+            }
         }
     }
 }
