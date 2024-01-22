@@ -93,8 +93,10 @@ public struct FeedbackManagerView: View {
                         // Section for app info (Name, version, build).
                         appInfoSection
                     }
+                    #if !os(visionOS)
                     // Allow the user to dismiss the keyboard by swiping.
                     .scrollDismissesKeyboard(.interactively)
+                    #endif
                     // Don't allow drag down to dismiss if we're in modal
                     // state and the contents have been edited.
                     .interactiveDismissDisabled(
@@ -257,7 +259,7 @@ extension FeedbackManagerView {
                     )
                     .frame(minHeight: 100)
                     .focused($isTextFieldFocused)
-                    #if !targetEnvironment(macCatalyst)
+                    #if !targetEnvironment(macCatalyst) && !os(visionOS)
                     .keyboardDoneButton {
                         isTextFieldFocused = false
                     }
