@@ -7,7 +7,9 @@
 
 import SwiftUI
 import PhotosUI
+#if canImport(MessageUI)
 import MessageUI
+#endif
 
 /**
  TODO
@@ -43,7 +45,7 @@ public struct FeedbackManagerView: View {
     private var selectedPhotoItems: [PhotosPickerItem] = []
 
     @State
-    private var selectedAttachmentImages: [UIImage] = []
+    private var selectedAttachmentImages: [NativeImage] = []
 
     @State
     private var showMailView: Bool = false
@@ -58,7 +60,7 @@ public struct FeedbackManagerView: View {
 
         // This is necessary to show the dismiss note with the same background
         // color as the form.
-        Color(.systemGroupedBackground)
+        backgroundColor
             .ignoresSafeArea()
             .overlay {
 
@@ -119,7 +121,7 @@ public struct FeedbackManagerView: View {
                             for item in selectedPhotoItems {
 
                                 if let imageData = try? await item.loadTransferable(type: Data.self),
-                                   let image = UIImage(data: imageData) {
+                                   let image = NativeImage(data: imageData) {
 
                                     withAnimation {
                                         selectedAttachmentImages.append(image)
@@ -136,6 +138,7 @@ public struct FeedbackManagerView: View {
                             state = .edited
                         }
                     }
+                    #if canImport(UIKit)
                     .sheet(isPresented: $showMailView) {
                         MailView(
                             data: $email,
@@ -167,6 +170,7 @@ public struct FeedbackManagerView: View {
                             }
                         )
                     }
+                    #endif
                     .alert(
                         Strings.alertMailUnavailableTitle,
                         isPresented: $showMailErrorAlert,
@@ -189,20 +193,36 @@ public struct FeedbackManagerView: View {
                 }
             }
             .navigationTitle(configuration.title)
+            #if canImport(UIKit)
             .navigationBarTitleDisplayMode(.large)
+            #endif
             .toolbar {
                 if configuration.isModal {
 
+                    #if canImport(UIKit)
                     ToolbarItem(placement: .topBarLeading) {
                         Button(configuration.cancelButtonTitle) {
                             dismiss()
                         }
                     }
+                    #elseif canImport(AppKit)
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(configuration.cancelButtonTitle) {
+                            dismiss()
+                        }
+                    }
+                    #endif
                 }
 
+                #if canImport(UIKit)
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(configuration.sendButtonTitle, action: sendEmail)
                 }
+                #elseif canImport(AppKit)
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(configuration.sendButtonTitle, action: sendEmail)
+                }
+                #endif
             }
     }
 }
@@ -259,7 +279,7 @@ extension FeedbackManagerView {
                     )
                     .frame(minHeight: 100)
                     .focused($isTextFieldFocused)
-                    #if !targetEnvironment(macCatalyst) && !os(visionOS)
+                    #if !targetEnvironment(macCatalyst) && !os(visionOS) && !os(macOS)
                     .keyboardDoneButton {
                         isTextFieldFocused = false
                     }
@@ -284,7 +304,7 @@ extension FeedbackManagerView {
                     ForEach(0..<selectedAttachmentImages.count, id: \.self) { idx in
 
                         Card {
-                            Image(uiImage: selectedAttachmentImages[idx])
+                            image(for: selectedAttachmentImages[idx])
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 100, height: 100)
@@ -326,6 +346,24 @@ extension FeedbackManagerView {
                 }
             )
         }
+    }
+
+    var backgroundColor: Color {
+
+        #if canImport(UIKit)
+        Color(.systemGroupedBackground)
+        #elseif canImport(AppKit)
+        Color(NSColor.windowBackgroundColor)
+        #endif
+    }
+
+    func image(for nativeImage: NativeImage) -> Image {
+
+        #if canImport(UIKit)
+        Image(uiImage: nativeImage)
+        #elseif canImport(AppKit)
+        Image(nsImage: nativeImage)
+        #endif
     }
 }
 
@@ -400,11 +438,20 @@ extension FeedbackManagerView {
 
             idx += 1
 
+            #if canImport(UIKit)
             return AttachmentData(
                 data: $0.jpegData(compressionQuality: 1.0)!,
                 mimeType: "image/jpeg",
                 fileName: "attachment\(idx).jpeg"
             )
+            #elseif canImport(AppKit)
+            let data = $0.tiffRepresentation!
+            return AttachmentData(
+                data: data,
+                mimeType: "image/tiff",
+                fileName: "attachment\(idx).tiff"
+            )
+            #endif
         }
 
         email.subject = "\(email.appName) - \(selectedTopic.name)"
@@ -436,6 +483,7 @@ extension FeedbackManagerView {
         // If sending mail via MFMailComposeViewController is not possible,
         // at least try to open the standard mail app.
         // Note that the image attachments are not sent with this method.
+        #if canImport(UIKit)
         guard MailView.canSendMail else {
 
             if let subject = email.subject.addingPercentEncoding(
@@ -470,6 +518,32 @@ extension FeedbackManagerView {
 
         // Show the MFMailComposeViewController view.
         showMailView = true
+        #elseif canImport(AppKit)
+        if let recipient = email.recipients.first,
+           let sharingService = NSSharingService(named: .composeEmail) {
+
+            sharingService.recipients = [recipient]
+            sharingService.subject = email.subject
+
+            /*
+            let images = selectedAttachmentImages.map { image in
+                #if canImport(UIKit)
+                return image.jpegData(compressionQuality: 1.0)!
+                #elseif canImport(AppKit)
+                $0.
+            }
+            */
+
+            sharingService.perform(
+                withItems: [body] + selectedAttachmentImages
+            )
+
+        } else {
+            // If opening the standard mail app also fails, display an error
+            // explaining that no emails can be sent from this device.
+            showMailErrorAlert = true
+        }
+        #endif
     }
 }
 

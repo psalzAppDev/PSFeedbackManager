@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "PSFeedbackManager",
     defaultLocalization: "en",
-    platforms: [.iOS(.v16), .macCatalyst(.v16), .visionOS(.v1)],
+    platforms: [.iOS(.v16), .macCatalyst(.v16), .visionOS(.v1), .macOS(.v13)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(

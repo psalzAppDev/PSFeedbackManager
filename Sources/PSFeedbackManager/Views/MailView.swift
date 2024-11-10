@@ -5,6 +5,8 @@
 //  Created by Peter Salz on 19.12.23.
 //
 
+#if canImport(UIKit)
+
 import SwiftUI
 import MessageUI
 
@@ -99,3 +101,5 @@ struct MailView: UIViewControllerRepresentable {
         MFMailComposeViewController.canSendMail()
     }
 }
+
+#endif
