@@ -5,6 +5,7 @@ A lightweight SwiftUI library that allows users to send feedback via email.
 This a SwiftUI re-write of [SwiftyFeedback](https://github.com/juanpablofernandez/SwiftyFeedback).
 
 It works on iOS, iPadOS, macOS (Designed for iPad) and macCatalyst with version 16.0 or higher.
+Now works on macOS, too!
 
 ![](Screenshots/Screenshots.jpeg)
 
@@ -20,8 +21,9 @@ It works on iOS, iPadOS, macOS (Designed for iPad) and macCatalyst with version 
 - iOS 16.0+
 - iPadOS 16.0+
 - Mac Catalyst 16.0+
+- macOS 13.0+
 - Xcode 15.0+
-- Swift 5.9+
+- Swift 5.10+
 
 ## Installation
 
