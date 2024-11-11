@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
 
-    #if !targetEnvironment(macCatalyst) && !os(visionOS)
+    #if !targetEnvironment(macCatalyst) && !os(visionOS) && !os(macOS)
     func keyboardDoneButton(action: @escaping () -> Void) -> some View {
 
         self

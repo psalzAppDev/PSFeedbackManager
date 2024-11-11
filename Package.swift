@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "PSFeedbackManager",
     defaultLocalization: "en",
-    platforms: [.iOS(.v16), .macCatalyst(.v16), .visionOS(.v1), .macOS(.v13)],
+    platforms: [.iOS(.v16), .macCatalyst(.v16), .visionOS(.v1)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(

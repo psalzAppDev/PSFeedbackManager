@@ -7,13 +7,8 @@
 
 import SwiftUI
 import PhotosUI
-#if canImport(MessageUI)
 import MessageUI
-#endif
 
-/**
- TODO
- */
 public struct FeedbackManagerView: View {
 
     public init(configuration: Configuration) {
@@ -138,7 +133,6 @@ public struct FeedbackManagerView: View {
                             state = .edited
                         }
                     }
-                    #if canImport(UIKit)
                     .sheet(isPresented: $showMailView) {
                         MailView(
                             data: $email,
@@ -170,7 +164,6 @@ public struct FeedbackManagerView: View {
                             }
                         )
                     }
-                    #endif
                     .alert(
                         Strings.alertMailUnavailableTitle,
                         isPresented: $showMailErrorAlert,
@@ -438,20 +431,11 @@ extension FeedbackManagerView {
 
             idx += 1
 
-            #if canImport(UIKit)
             return AttachmentData(
                 data: $0.jpegData(compressionQuality: 1.0)!,
                 mimeType: "image/jpeg",
                 fileName: "attachment\(idx).jpeg"
             )
-            #elseif canImport(AppKit)
-            let data = $0.tiffRepresentation!
-            return AttachmentData(
-                data: data,
-                mimeType: "image/tiff",
-                fileName: "attachment\(idx).tiff"
-            )
-            #endif
         }
 
         email.subject = "\(email.appName) - \(selectedTopic.name)"
