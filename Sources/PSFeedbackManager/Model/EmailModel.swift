@@ -11,7 +11,8 @@ import UIKit
 import AppKit
 #endif
 
-struct EmailModel {
+@MainActor
+struct EmailModel: Sendable {
 
     var subject = ""
     var body = ""

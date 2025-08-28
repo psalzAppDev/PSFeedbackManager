@@ -194,9 +194,23 @@ public struct FeedbackManagerView: View {
 
                     #if canImport(UIKit)
                     ToolbarItem(placement: .topBarLeading) {
+                        #if compiler(>=6.2)
+                        if #available(iOS 26.0, *) {
+                            Button(
+                                role: .close,
+                                action: { dismiss() }
+                            )
+                            .buttonStyle(.glass)
+                        } else {
+                            Button(configuration.cancelButtonTitle) {
+                                dismiss()
+                            }
+                        }
+                        #else
                         Button(configuration.cancelButtonTitle) {
                             dismiss()
                         }
+                        #endif
                     }
                     #elseif canImport(AppKit)
                     ToolbarItem(placement: .cancellationAction) {
@@ -209,7 +223,26 @@ public struct FeedbackManagerView: View {
 
                 #if canImport(UIKit)
                 ToolbarItem(placement: .topBarTrailing) {
+
+                    #if compiler(>=6.2)
+                    if #available(iOS 26.0, *) {
+                        Button(
+                            action: sendEmail,
+                            label: {
+                                Label(
+                                    configuration.sendButtonTitle,
+                                    systemImage: "square.and.arrow.up"
+                                )
+                            }
+                        )
+                        .buttonStyle(.glassProminent)
+
+                    } else {
+                        Button(configuration.sendButtonTitle, action: sendEmail)
+                    }
+                    #else
                     Button(configuration.sendButtonTitle, action: sendEmail)
+                    #endif
                 }
                 #elseif canImport(AppKit)
                 ToolbarItem(placement: .confirmationAction) {
@@ -303,6 +336,44 @@ extension FeedbackManagerView {
                                 .frame(width: 100, height: 100)
                                 .overlay(alignment: .bottomTrailing) {
                                     // Button to delete the image.
+                                    #if compiler(>=6.2)
+                                    if #available(iOS 26.0, *) {
+
+                                        Button(
+                                            role: .destructive,
+                                            action: {
+                                                deleteAttachment(at: idx)
+                                            },
+                                            label: {
+                                                Image(systemName: "trash")
+                                            }
+                                        )
+                                        .font(.title2)
+                                        .padding(4)
+                                        .foregroundStyle(.red)
+                                        .buttonStyle(.glass)
+                                        .padding(.bottom, 2)
+                                        .padding(.trailing, 2)
+
+                                    } else {
+
+                                        Button(
+                                            role: .destructive,
+                                            action: {
+                                                deleteAttachment(at: idx)
+                                            },
+                                            label: {
+                                                Image(systemName: "trash")
+                                            }
+                                        )
+                                        .font(.title2)
+                                        .padding(8)
+                                        .background(.thinMaterial)
+                                        .clipShape(.circle)
+                                        .padding(.bottom, 2)
+                                        .padding(.trailing, 2)
+                                    }
+                                    #else
                                     Button(
                                         role: .destructive,
                                         action: {
@@ -315,9 +386,10 @@ extension FeedbackManagerView {
                                     .font(.title2)
                                     .padding(8)
                                     .background(.thinMaterial)
-                                    .clipShape(Circle())
+                                    .clipShape(.circle)
                                     .padding(.bottom, 2)
                                     .padding(.trailing, 2)
+                                    #endif
                                 }
                         }
                     }

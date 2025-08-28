@@ -66,7 +66,7 @@ struct AttachmentViewStyle {
     var rowTitleSpacing: Double
     var rowItemSpacing: Double
 
-    static var standard = AttachmentViewStyle()
+    static let standard = AttachmentViewStyle()
 }
 
 #Preview {
