@@ -20,8 +20,7 @@ let package = Package(
         .target(
             name: "PSFeedbackManager",
             dependencies: [],
-            path: "Sources",
-            resources: [.process("PSFeedbackManager/Resources/")]
+            resources: [.process("Localizable.xcstrings")]
         ),
         .testTarget(
             name: "PSFeedbackManagerTests",

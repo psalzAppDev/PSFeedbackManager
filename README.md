@@ -5,7 +5,6 @@ A lightweight SwiftUI library that allows users to send feedback via email.
 This a SwiftUI re-write of [SwiftyFeedback](https://github.com/juanpablofernandez/SwiftyFeedback).
 
 It works on iOS, iPadOS, macOS (Designed for iPad) and macCatalyst with version 16.0 or higher.
-Now works on macOS, too!
 
 ![](Screenshots/Screenshots.jpeg)
 
@@ -22,8 +21,8 @@ Now works on macOS, too!
 - iPadOS 16.0+
 - Mac Catalyst 16.0+
 - macOS 13.0+
-- Xcode 15.0+
-- Swift 5.10+
+- Xcode 15.0+ (and Xcode 26.0+ for the new Liquid Glass Design!)
+- Swift 5.10+ and Swift 6.0+
 
 ## Installation
 
@@ -107,14 +106,26 @@ struct ContentView: View {
 
 Localization is available for the following languages:
 - English
-- German
-- Spanish
-- French
-- Italian
+- Arabic
+- Danish
 - Dutch
+- Finish
+- French
+- German
+- Greek
+- Hungarian
+- Italian
+- Japanese
+- Korean
+- Norwegian
+- Polish
 - Portuguese
+- Romanian
 - Russian
+- Spanish
 - Swedish
+- Turkish
+- Ukrainian
 
 Any help improving the localizations is warmly appreciated!
 

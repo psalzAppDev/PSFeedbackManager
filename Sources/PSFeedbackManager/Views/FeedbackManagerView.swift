@@ -200,7 +200,6 @@ public struct FeedbackManagerView: View {
                                 role: .close,
                                 action: { dismiss() }
                             )
-                            .buttonStyle(.glass)
                         } else {
                             Button(configuration.cancelButtonTitle) {
                                 dismiss()
